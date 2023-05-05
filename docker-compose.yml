@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+    nats:
+        container_name: nats
+        entrypoint: "/nats-server -c nats-server.conf -DV"
+        image: nats
+        ports:
+            - "4222:4222"
+            - "6222:6222"
+            - "8222:8222"
+        networks: ["nats"]
+    # All microservice need to be inside container
+    # gateway:
+    #     # volumes:
+    #     #     - ./gateway:/app
+    #     build:
+    #         context: ./gateway
+    #         dockerfile: Dockerfile
+    #     container_name: gateway
+    #     command: npm run start:dev
+    #     ports:
+    #         - 3001:3001
+    #     networks: ["nats"]
+
+    # user:
+    #     # volumes:
+    #     #     - ./user:/app
+    #     build:
+    #         context: ./user
+    #         dockerfile: Dockerfile
+    #     container_name: user
+    #     command: npm run start:dev
+    #     networks: ["nats"]
+    # entrypoint: tail -F /dev/null
+networks:
+    nats:
+        name: nats
