@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+king: Deployment
+metadata:
+  name: user
+spec:
+  selector:
+    matchLabels:
+      app: user
+  replicas: 1
+  template:
+    metadata:
+      labels: user
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: microservice_v2_user
+          image: user
+          ports:
+          - containerPort: 4222
+          resources:
+            limits:
+              memory: 128Mi
+              cpu: "1"
+            requests:
+              memory: 64Mi
+              cpu: "0.2"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: userservice
+spec:
+  type: ClusterIP
+  selector:
+    app: userservice
+  ports:
+  - name: nats
+    ports: 4222
+    targetPort: 4222

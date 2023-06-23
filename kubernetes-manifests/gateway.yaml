@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: microservice_v2_gateway
+        image: gateway
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+        ports:
+        - containerPort: 3001
+---
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gatewayservice
+spec:
+  type: ClusterIP
+  selector:
+    app: gatewayservice
+  ports:
+  - name: nats
+    ports: 3001
+    targetPort: 3001
