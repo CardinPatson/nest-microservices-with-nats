@@ -7,11 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     AppModule,
     {
-      transport : Transport.NATS,
-      options : {
-        servers: ['nats://localhost:4222']
-      }
-    }
+      transport: Transport.NATS,
+      options: {
+        servers: ['nats://nats:4222'],
+      },
+    },
   );
   app.useGlobalPipes(new ValidationPipe());
   await app.listen();

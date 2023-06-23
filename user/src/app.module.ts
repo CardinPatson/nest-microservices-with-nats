@@ -11,7 +11,7 @@ import { USER_SERVICE } from './user.constants';
         name: USER_SERVICE,
         transport: Transport.NATS,
         options: {
-          servers: 'nats://localhost:4222',
+          servers: 'nats://nats:4222',
         },
       },
     ]),
